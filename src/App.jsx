@@ -6,12 +6,13 @@ import Products from "./Products";
 import { Routes, Route } from "react-router-dom";
 import Detail from "./Detail";
 import Cart from "./Cart";
+import Checkout from "./Checkout";
 
 export default function App() {
   const [cart, setCart] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("cart")) ?? [];
-    } catch {
+      return JSON.parse(localStorage.getItem("cart"));
+    } catch (error) {
       console.error("The cart could not be parsed into JSON.");
       return [];
     }
@@ -43,7 +44,7 @@ export default function App() {
   }
 
   return (
-    <div>
+    <React.Fragment>
       <div className="content">
         <Header />
         <main>
@@ -58,10 +59,11 @@ export default function App() {
               path="/cart"
               element={<Cart cart={cart} updateQuantity={updateQuantity} />}
             />
+            <Route path="/checkout" element={<Checkout cart={cart} />} />
           </Routes>
         </main>
       </div>
       <Footer />
-    </div>
+    </React.Fragment>
   );
 }
