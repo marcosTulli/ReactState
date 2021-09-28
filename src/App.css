@@ -59,7 +59,9 @@ header li {
 }
 
 #detail img {
+  display: flex;
   max-height: 400;
+  justify-self: center;
 }
 
 #price {
@@ -131,10 +133,11 @@ h3 {
 }
 
 img {
-  max-width: 100%;
+  max-width: 40%;
   height: auto;
   border: 0;
   vertical-align: middle;
+  justify-content: center;
 }
 
 .btn-primary {
