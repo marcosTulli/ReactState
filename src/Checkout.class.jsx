@@ -28,11 +28,11 @@ export default class Checkout extends React.Component {
   }
 
   handleChange = (e) => {
-    e.persist();
+    e.persist(); // persist the event
     this.setState((state) => {
       return {
         address: {
-          ...state.Address,
+          ...state.address,
           [e.target.id]: e.target.value,
         },
       };
@@ -53,7 +53,7 @@ export default class Checkout extends React.Component {
       try {
         await saveShippingAddress(this.state.address);
         this.props.dispatch({ type: "empty" });
-        this.setState({ status: STATUS.SUBMITTED });
+        this.setState({ status: STATUS.COMPLETED });
       } catch (e) {
         this.setState({ saveError: e });
       }
@@ -64,21 +64,22 @@ export default class Checkout extends React.Component {
 
   getErrors(address) {
     const result = {};
-    if (!address.city) result.city = " City is required";
-    if (!address.country) result.country = " Country is required";
+    if (!address.city) result.city = "City is required";
+    if (!address.country) result.country = "Country is required";
     return result;
   }
 
   render() {
-    const { status, daveError, touched, address } = this.state;
+    const { status, saveError, touched, address } = this.state;
 
-    // Derive State
+    //Derived state
     const errors = this.getErrors(this.state.address);
 
-    if (this.saveError) throw this.saveError;
+    if (saveError) throw saveError;
     if (status === STATUS.COMPLETED) {
-      return <h1>Thanks for shopping! </h1>;
+      return <h1>Thanks for shopping!</h1>;
     }
+
     return (
       <div>
         <h1>Shipping Info</h1>
